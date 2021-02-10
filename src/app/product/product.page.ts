@@ -1,15 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { ProductsService } from "../services/products.service";
+import { ProductsService } from './../services/products.service';
+import { WishlistService } from './../services/wishlist.service';
+import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: "app-product",
-  templateUrl: "./product.page.html",
-  styleUrls: ["./product.page.scss"]
+  selector: 'page-product',
+  templateUrl: 'product.page.html'
 })
-export class ProductPage implements OnInit {
-  constructor(public productsService: ProductsService) {}
+export class ProductPage {
 
-  ngOnInit() {
+  constructor(public navCtrl: NavController, public productsService: ProductsService, public wishlistService: WishlistService) {}
+
+  ionViewDidLoad() {
     this.productsService.load();
   }
+
+  launchWishlist() {
+    this.navCtrl.navigateForward("wishlist");
+  }
+
+  addToWishlist(product){
+    this.wishlistService.addProduct(product);
+  }
+
 }
